@@ -3,31 +3,63 @@
 }
 
 <main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center py-5">
+            <h1 class="display-4">Benvenuti in Henrni Spedizioni</h1>
+            <p class="lead">La tua scelta affidabile per spedizioni internazionali.</p>
+        </div>
     </section>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
-    </div>
+    <!-- About Section -->
+    <section class="about-section bg-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Chi Siamo</h2>
+                    <p>Henrni Spedizioni è un leader globale nel settore delle spedizioni internazionali, fornendo soluzioni rapide, sicure e personalizzate per tutte le tue esigenze di trasporto merci. Con oltre 20 anni di esperienza, ci impegniamo a consegnare i tuoi beni in modo tempestivo e efficiente, ovunque nel mondo.</p>
+                    <p>La nostra rete globale e l'approccio orientato al cliente ci consentono di offrire un servizio senza eguali, adattandoci alle diverse necessità logistiche e superando le aspettative dei clienti in termini di qualità e affidabilità.</p>
+                </div>
+                <div class="col-md-6">
+                    <img src="https://img.freepik.com/free-photo/shipping-industry-delivering-cargo-large-container-ship-generative-ai_188544-9112.jpg?size=626&ext=jpg&ga=GA1.1.632798143.1708732800&semt=sph" alt="Spedizioni internazionali" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">I Nostri Servizi</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="service-item p-3">
+                        <h3>Spedizioni Terrestri</h3>
+                        <p>Trasporto merci via terra con una vasta gamma di opzioni di consegna: standard, espresso e su misura.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-item p-3">
+                        <h3>Spedizioni Aeree</h3>
+                        <p>Opzioni di spedizione aerea flessibili e veloci per invii urgenti o per merci di valore.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-item p-3">
+                        <h3>Spedizioni Marittime</h3>
+                        <p>Soluzioni economiche per spedizioni di grande volume attraverso la nostra vasta rete di trasporto marittimo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section bg-light py-5">
+        <div class="container text-center">
+            <h2>Hai bisogno di una soluzione di spedizione?</h2>
+            <p>Contattaci oggi stesso e lascia che il nostro team di esperti trovi la soluzione perfetta per le tue esigenze di spedizione.</p>
+            <a href="@Url.Action("Contact", "Home")" class="btn btn-primary">Contattaci</a>
+        </div>
+    </section>
 </main>

@@ -1,0 +1,25 @@
+﻿@model HenriSpediziona.Models.AdminLoginViewModel
+@{
+    ViewBag.Title = "Admin Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h2 class="text-center">Login Amministratore</h2>
+            @using (Html.BeginForm("Login", "Admin", FormMethod.Post, new { @class = "form-signin" }))
+            {@Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email", required = "required" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", required = "required" })
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Accedi</button>
+        }
+        </div>
+    </div>
+</div>
