@@ -20,9 +20,9 @@ public class AdminController : Controller
         }
 
         
-        if (model.Email == "pippo@franco" && model.Password == "franco")
+        if (model.Email == "pippo@franco" && model.Password == "LagunaRio2322")
         {
-            // Imposta qui la sessione dell'amministratore
+           
             Session["AdminLogged"] = true;
             return RedirectToAction("Index", "Home"); 
         }
@@ -32,4 +32,10 @@ public class AdminController : Controller
             return View(model);
         }
     }
+    public ActionResult Logout()
+    {
+        Session["AdminLogged"] = null;
+        return RedirectToAction("Index", "Home"); 
+    }
+
 }

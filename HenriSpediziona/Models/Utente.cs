@@ -13,7 +13,7 @@ namespace HenriSpediziona.Models
         public bool Azienda { get; set; }
         public string Nome { get; set; }
         public string Cod_Fisc { get; set; }
-        public int P_iva { get; set; }
+        public int? P_iva { get; set; }
         public bool IsAdmin { get; set; }
         public string Cognome { get; set; }
 

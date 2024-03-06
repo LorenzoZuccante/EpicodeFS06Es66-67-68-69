@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Applicazione ASP.NET</title>
@@ -19,9 +19,17 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Informazioni", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Addetti ai lavori", "Login", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
 
+                    @if (Session["AdminLogged"] != null && (bool)Session["AdminLogged"])
+                    {
+                        <li>@Html.ActionLink("Monitora Spedizioni", "Index", "Spedizioni", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Registrazione Clienti", "Index", "Utente", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Admin", new { area = "" }, new { @class = "nav-link btn btn-danger text-light" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Addetti ai lavori", "Login", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
                 </ul>
             </div>
         </div>

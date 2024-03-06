@@ -1,0 +1,44 @@
+﻿@model IEnumerable<HenriSpediziona.Models.Spedizione>
+
+@{
+    ViewBag.Title = "Elenco Spedizioni";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Inserisci nuova spedizione", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Spedizione</th>
+            <th>ID Utente</th>
+            <th>Data Spedizione</th>
+            <th>Peso</th>
+            <th>Città Destinataria</th>
+            <th>Indirizzo Destinatario</th>
+            <th>Nominativo Destinatario</th>
+            <th>Costo Spedizione</th>
+            <th>Data di Consegna</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.IdSpedizione)</td>
+                <td>@Html.DisplayFor(modelItem => item.IdUtente)</td>
+                <td>@Html.DisplayFor(modelItem => item.DataSpedizione)</td>
+                <td>@Html.DisplayFor(modelItem => item.Peso)</td>
+                <td>@Html.DisplayFor(modelItem => item.CittaDestinataria)</td>
+                <td>@Html.DisplayFor(modelItem => item.IndirizzoDestinatario)</td>
+                <td>@Html.DisplayFor(modelItem => item.NomeDestinatario) @Html.DisplayFor(modelItem => item.CognomeDestinatario)</td>
+                <td>@Html.DisplayFor(modelItem => item.CostoSpedizione)</td>
+                <td>@Html.DisplayFor(modelItem => item.DataDiConsegna)</td>
+            </tr>
+        }
+    </tbody>
+</table>

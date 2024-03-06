@@ -1,0 +1,36 @@
+﻿@model IEnumerable<HenriSpediziona.Models.Utente>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Lista Utenti";
+}
+
+<h2>Lista Clienti</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Azienda</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Codice Fiscale</th>
+            <th>Partita IVA</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.Azienda)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.Cognome)</td>
+                <td>@Html.DisplayFor(modelItem => item.Cod_Fisc)</td>
+                <td>@Html.DisplayFor(modelItem => item.P_iva)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("New", "Utente")" class="btn btn-primary">Aggiungi altri utenti</a>

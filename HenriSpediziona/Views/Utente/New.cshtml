@@ -1,0 +1,72 @@
+﻿@model HenriSpediziona.Models.Utente
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-3">Registrazione Nuovo Cliente</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-check mb-3">
+            @Html.LabelFor(model => model.Azienda, new { @class = "form-check-label" })
+            @Html.CheckBoxFor(model => model.Azienda, new { @class = "form-check-input", id = "aziendaCheckbox" })
+        </div>
+
+        <div class="form-group mb-3">
+            @Html.LabelFor(model => model.Email)
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group mb-3">
+            @Html.LabelFor(model => model.Password)
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+        </div>
+
+        <div class="form-group mb-3">
+            @Html.LabelFor(model => model.Nome)
+            @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div id="privatoFields">
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.Cognome)
+                @Html.EditorFor(model => model.Cognome, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.Cod_Fisc)
+                @Html.EditorFor(model => model.Cod_Fisc, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div id="aziendaFields" style="display:none;">
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.P_iva)
+                @Html.EditorFor(model => model.P_iva, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crea Utente</button>
+    }
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $("#aziendaCheckbox").change(function () {
+                var isChecked = $(this).is(":checked");
+                $("#privatoFields").toggle(!isChecked);
+                $("#aziendaFields").toggle(isChecked);
+                
+                if (isChecked) {
+                    $("#privatoFields input").val('');
+                } else {
+                    $("#aziendaFields input").val('');
+                }
+            });
+        });
+    </script>
+}
