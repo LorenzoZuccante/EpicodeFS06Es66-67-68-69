@@ -42,3 +42,26 @@
         }
     </tbody>
 </table>
+<h3>Spedizioni per Città</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Città Destinataria</th>
+            <th>Numero di Spedizioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.SpedizioniPerCitta != null)
+        {
+            var spedizioniPerCitta = ViewBag.SpedizioniPerCitta as Dictionary<string, int>;
+            foreach (var coppia in spedizioniPerCitta)
+            {
+                <tr>
+                    <td>@coppia.Key</td>
+                    <td>@coppia.Value</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

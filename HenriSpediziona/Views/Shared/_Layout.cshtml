@@ -19,10 +19,12 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Traccia Spedizioni", "Index", "Tracking", new { area = "" }, new { @class = "nav-link" })</li>
 
                     @if (Session["AdminLogged"] != null && (bool)Session["AdminLogged"])
                     {
                         <li>@Html.ActionLink("Monitora Spedizioni", "Index", "Spedizioni", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Monitora Aggiornamenti", "Index", "StatiSpedizioni", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Registrazione Clienti", "Index", "Utente", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Admin", new { area = "" }, new { @class = "nav-link btn btn-danger text-light" })</li>
                     }

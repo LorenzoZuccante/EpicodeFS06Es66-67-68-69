@@ -8,7 +8,7 @@ using HenriSpediziona.Models;
 
 public class SpedizioniController : Controller
 {
-    // GET: Spedizioni/Create
+    // Metodo GET per la creazione di una nuova spedizione
     public ActionResult Create()
     {
         if (Session["AdminLogged"] == null || !(bool)Session["AdminLogged"])
@@ -16,12 +16,11 @@ public class SpedizioniController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        // Prepara la vista con la lista degli utenti
         ViewBag.IdUtente = new SelectList(GetUtenti(), "Value", "Text");
-        return View(new Spedizione { DataSpedizione = DateTime.Now });  // Imposta la data di spedizione predefinita
+        return View(new Spedizione { DataSpedizione = DateTime.Now });
     }
 
-    // POST: Spedizioni/Create
+    // Metodo POST per la creazione di una nuova spedizione
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Create(Spedizione spedizione)
@@ -36,6 +35,7 @@ public class SpedizioniController : Controller
             string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
+                con.Open();
                 string query = @"INSERT INTO Spedizioni (IdUtente, DataSpedizione, Peso, CittaDestinataria, IndirizzoDestinatario, NomeDestinatario, CognomeDestinatario, CostoSpedizione, DataDiConsegna)
                                  VALUES (@IdUtente, @DataSpedizione, @Peso, @CittaDestinataria, @IndirizzoDestinatario, @NomeDestinatario, @CognomeDestinatario, @CostoSpedizione, @DataDiConsegna)";
                 using (SqlCommand cmd = new SqlCommand(query, con))
@@ -46,24 +46,22 @@ public class SpedizioniController : Controller
                     cmd.Parameters.AddWithValue("@Peso", spedizione.Peso);
                     cmd.Parameters.AddWithValue("@CittaDestinataria", spedizione.CittaDestinataria);
                     cmd.Parameters.AddWithValue("@IndirizzoDestinatario", spedizione.IndirizzoDestinatario);
-                    cmd.Parameters.AddWithValue("@NomeDestinatario", spedizione.NomeDestinatario ?? (object)DBNull.Value); // Gestisci i campi nullable
-                    cmd.Parameters.AddWithValue("@CognomeDestinatario", spedizione.CognomeDestinatario ?? (object)DBNull.Value); // Gestisci i campi nullable
+                    cmd.Parameters.AddWithValue("@NomeDestinatario", spedizione.NomeDestinatario ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@CognomeDestinatario", spedizione.CognomeDestinatario ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@CostoSpedizione", spedizione.CostoSpedizione);
-                    cmd.Parameters.AddWithValue("@DataDiConsegna", spedizione.DataDiConsegna ?? (object)DBNull.Value); // Gestisci i campi nullable
+                    cmd.Parameters.AddWithValue("@DataDiConsegna", spedizione.DataDiConsegna ?? (object)DBNull.Value);
 
-                    con.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
-
-            return RedirectToAction("Index");  
+            return RedirectToAction("Index");
         }
 
-        // Se il modello non è valido, ricarica la pagina con le informazioni attuali
         ViewBag.IdUtente = new SelectList(GetUtenti(), "Value", "Text", spedizione.IdUtente);
         return View(spedizione);
     }
 
+    // Recupera una lista degli utenti per la selezione nella vista di creazione
     private IEnumerable<SelectListItem> GetUtenti()
     {
         List<SelectListItem> utenti = new List<SelectListItem>();
@@ -77,18 +75,18 @@ public class SpedizioniController : Controller
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    string fullName = reader["Nome"].ToString() + " " + reader["Cognome"].ToString();
-
                     utenti.Add(new SelectListItem
                     {
-                        Value = reader["IdUtente"].ToString(), // ID dell'utente
-                        Text = fullName // Nome e Cognome concatenati
+                        Value = reader["IdUtente"].ToString(),
+                        Text = reader["Nome"].ToString() + " " + reader["Cognome"].ToString()
                     });
                 }
             }
         }
         return utenti;
     }
+
+    // Metodo GET per visualizzare l'elenco delle spedizioni
     public ActionResult Index()
     {
         if (Session["AdminLogged"] == null || !(bool)Session["AdminLogged"])
@@ -97,14 +95,16 @@ public class SpedizioniController : Controller
         }
 
         List<Spedizione> spedizioni = new List<Spedizione>();
+        Dictionary<string, int> conteggioPerCitta = new Dictionary<string, int>();
+
         string connectionString = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
         using (SqlConnection con = new SqlConnection(connectionString))
         {
-            string query = "SELECT * FROM Spedizioni";
-            using (SqlCommand cmd = new SqlCommand(query, con))
+            con.Open();
+            string querySpedizioni = "SELECT * FROM Spedizioni";
+            using (SqlCommand cmdSpedizioni = new SqlCommand(querySpedizioni, con))
             {
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmdSpedizioni.ExecuteReader();
                 while (reader.Read())
                 {
                     Spedizione spedizione = new Spedizione
@@ -118,13 +118,27 @@ public class SpedizioniController : Controller
                         NomeDestinatario = reader["NomeDestinatario"].ToString(),
                         CognomeDestinatario = reader["CognomeDestinatario"].ToString(),
                         CostoSpedizione = (decimal)reader["CostoSpedizione"],
-                        DataDiConsegna = reader["DataDiConsegna"] as DateTime?
+                        DataDiConsegna = reader.IsDBNull(reader.GetOrdinal("DataDiConsegna")) ? null : (DateTime?)reader["DataDiConsegna"]
                     };
                     spedizioni.Add(spedizione);
+
+                    string citta = spedizione.CittaDestinataria;
+                    if (!string.IsNullOrEmpty(citta))
+                    {
+                        if (conteggioPerCitta.ContainsKey(citta))
+                        {
+                            conteggioPerCitta[citta]++;
+                        }
+                        else
+                        {
+                            conteggioPerCitta[citta] = 1;
+                        }
+                    }
                 }
             }
         }
+
+        ViewBag.SpedizioniPerCitta = conteggioPerCitta;
         return View(spedizioni);
     }
-
 }

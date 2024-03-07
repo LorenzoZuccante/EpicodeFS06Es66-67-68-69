@@ -1,0 +1,58 @@
+﻿@model HenriSpediziona.Models.TrackingViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Tracciamento Spedizione";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Index", "Tracking", FormMethod.Post))
+{
+    <div class="form-group">
+        <div class="form-check">
+            @Html.CheckBoxFor(model => model.IsAzienda, new { @class = "form-check-input", @id = "IsAzienda" })
+            @Html.LabelFor(model => model.IsAzienda, "Sono un'azienda", new { @class = "form-check-label" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CodiceFiscalePartitaIVA, "Codice Fiscale / Partita IVA", new { @class = "control-label" })
+        @Html.EditorFor(model => model.CodiceFiscalePartitaIVA, new { htmlAttributes = new { @class = "form-control", @id = "CodiceFiscalePartitaIVA" } })
+        @Html.ValidationMessageFor(model => model.CodiceFiscalePartitaIVA, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdSpedizione, "ID Spedizione", new { @class = "control-label" })
+        @Html.EditorFor(model => model.IdSpedizione, new { htmlAttributes = new { @class = "form-control", @id = "IdSpedizione" } })
+        @Html.ValidationMessageFor(model => model.IdSpedizione, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Traccia</button>
+}
+
+@if (Model.StatiSpedizione != null && Model.StatiSpedizione.Any())
+{
+    <h3>Stato della Spedizione:</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Data e Ora</th>
+                <th>Stato</th>
+                <th>Posizione</th>
+                <th>Descrizione</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stato in Model.StatiSpedizione)
+            {
+                <tr>
+                    <td>@stato.DataOraAggiornamento.ToString("g")</td>
+                    <td>@stato.StatoConsegna</td>
+                    <td>@stato.PosizionePacco</td>
+                    <td>@stato.Descrizione</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

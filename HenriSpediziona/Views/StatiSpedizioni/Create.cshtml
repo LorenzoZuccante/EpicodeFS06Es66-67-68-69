@@ -1,0 +1,71 @@
+﻿@model HenriSpediziona.Models.StatoSpedizione
+
+@{
+    ViewBag.Title = "Registra Stato Spedizione";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">@ViewBag.Title</h2>
+
+    @using (Html.BeginForm("Create", "StatiSpedizioni", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.IdSpedizione, "Spedizione", new { @class = "form-label" })
+            @Html.DropDownListFor(model => model.IdSpedizione, (SelectList)ViewBag.IdSpedizione, "Seleziona una spedizione", new { @class = "form-select" })
+            @Html.ValidationMessageFor(model => model.IdSpedizione, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.StatoConsegna, "Stato Consegna", new { @class = "form-label" })
+            @Html.DropDownListFor(model => model.StatoConsegna, (SelectList)ViewBag.StatoConsegna, "Seleziona lo stato", new { @class = "form-select" })
+            @Html.ValidationMessageFor(model => model.StatoConsegna, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.PosizionePacco, "Posizione Pacco", new { @class = "form-label" })
+            @Html.EditorFor(model => model.PosizionePacco, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PosizionePacco, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Descrizione, "Descrizione", new { @class = "form-label" })
+            @Html.TextAreaFor(model => model.Descrizione, new { @class = "form-control", rows = 5 })
+            @Html.ValidationMessageFor(model => model.Descrizione, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.DataOraAggiornamento, "Data e Ora Aggiornamento", new { @class = "form-label" })
+            @Html.EditorFor(model => model.DataOraAggiornamento, new { @class = "form-control", @type = "datetime-local" })
+            @Html.ValidationMessageFor(model => model.DataOraAggiornamento, "", new { @class = "text-danger" })
+        </div>
+
+        <button type="submit" class="btn btn-success">Registra</button>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        // Abilita la validazione lato client per la forma
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+}

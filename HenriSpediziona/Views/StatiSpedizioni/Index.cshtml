@@ -1,0 +1,45 @@
+﻿@model IEnumerable<HenriSpediziona.Models.StatoSpedizione>
+
+@{
+    ViewBag.Title = "Stato Spedizioni";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+@if (ViewBag.CountInConsegna != null)
+{
+    <h3>Spedizioni "In Consegna": @ViewBag.CountInConsegna</h3>
+}
+
+
+<p>
+    @Html.ActionLink("Aggiorna stato spedizione", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Mostra In Consegna", "FiltraInConsegna", null, new { @class = "btn btn-secondary" })
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Stato</th>
+            <th>ID Spedizione</th>
+            <th>Stato Consegna</th>
+            <th>Posizione Pacco</th>
+            <th>Descrizione</th>
+            <th>Data Ora Aggiornamento</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.IdStato)</td>
+                <td>@Html.DisplayFor(modelItem => item.IdSpedizione)</td>
+                <td>@Html.DisplayFor(modelItem => item.StatoConsegna)</td>
+                <td>@Html.DisplayFor(modelItem => item.PosizionePacco)</td>
+                <td>@Html.DisplayFor(modelItem => item.Descrizione)</td>
+                <td>@Html.DisplayFor(modelItem => item.DataOraAggiornamento)</td>
+            </tr>
+        }
+    </tbody>
+</table>
